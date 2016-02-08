@@ -124,11 +124,11 @@ $(document).on('ready', function () {
     }
 
     // create a cube
-    this.cube = {}
-    var geometry = new THREE.CubeGeometry(200, 200, 200);
+    this.knot = {}
+    var geometry = new THREE.TorusKnotGeometry(5, 1, 64, 8, 2, 3, 1);
     var material = new THREE.MeshNormalMaterial({shading: THREE.FlatShading});
-    this.cube.mesh = new THREE.Mesh(geometry, material);
-    this.addObjectToScene.add(this.cube);
+    this.knot.mesh = new THREE.Mesh(geometry, material);
+    this.addObjectToScene(this.knot);
 
 
 
