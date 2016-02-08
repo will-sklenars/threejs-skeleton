@@ -89,49 +89,6 @@ $(document).on('ready', function () {
     })
 
 
-    ///////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////// UTILITIES ////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////// adding & removing objects from scene /////////////////////////////////
-
-    this.addObjectsToScene = function (objects) {
-      _.forEach(objects, self.addObjectToScene)
-    }
-
-    this.addObjectToScene = function (object) {
-      self.scene.add(object.mesh)
-    }
-
-    this.removeObjectFromScene = function (object) {
-      self.scene.remove( object.mesh )
-    }
-
-    this.removeObjectsFromScene = function (objects) { // duplicate of ebove function
-      _.forEach( objects, self.removeObjectFromScene )
-    }
-
-    //////////////////////////////////// billboarding ////////////////////////////////////////////////
-
-    this.billboardObjects = function (objects) {
-      _.forEach(objects, function(object) {
-        self.billboardObject(object)
-      })
-    }
-
-    this.billboardObject = function (object) {
-      object.mesh.quaternion.copy( self.camera.quaternion )
-    }
-
-    // create a cube
-    this.knot = {}
-    var geometry = new THREE.TorusKnotGeometry(5, 1, 64, 8, 2, 3, 1);
-    var material = new THREE.MeshNormalMaterial({shading: THREE.FlatShading});
-    this.knot.mesh = new THREE.Mesh(geometry, material);
-    this.addObjectToScene(this.knot);
-
-
-
     //////////////////////////////////////////////////////////////////////////////
     //                         render the scene                                 //
     //////////////////////////////////////////////////////////////////////////////
@@ -142,8 +99,15 @@ $(document).on('ready', function () {
 
   }
 
-  environment.animate = function () {
+  environment.populateScene = function () {
+    this.knot = {}
+    var geometry = new THREE.TorusKnotGeometry(5, 1, 64, 8, 2, 3, 1);
+    var material = new THREE.MeshNormalMaterial({shading: THREE.FlatShading});
+    this.knot.mesh = new THREE.Mesh(geometry, material);
+    this.addObjectToScene(this.knot);
+  }
 
+  environment.animate = function () {
   }
 
   environment.render = function () {
@@ -171,7 +135,44 @@ $(document).on('ready', function () {
     })
   }
 
+
+  ///////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////// UTILITIES ////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////
+
+  ///////////////////////// adding & removing objects from scene /////////////////////////////////
+
+  environment.addObjectsToScene = function (objects) {
+    _.forEach(objects, environment.addObjectToScene)
+  }
+
+  environment.addObjectToScene = function (object) {
+    environment.scene.add(object.mesh)
+  }
+
+  environment.removeObjectFromScene = function (object) {
+    environment.scene.remove( object.mesh )
+  }
+
+  environment.removeObjectsFromScene = function (objects) { // duplicate of ebove function
+    _.forEach( objects, environment.removeObjectFromScene )
+  }
+
+  //////////////////////////////////// billboarding ////////////////////////////////////////////////
+
+  environment.billboardObjects = function (objects) {
+    _.forEach(objects, function(object) {
+      environment.billboardObject(object)
+    })
+  }
+
+  environment.billboardObject = function (object) {
+    object.mesh.quaternion.copy( environment.camera.quaternion )
+  }
+
   environment.init()
+
+  environment.populateScene()
 
   environment.animate()
 
