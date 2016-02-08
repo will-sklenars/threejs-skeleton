@@ -147,7 +147,11 @@ $(document).on('ready', function () {
   }
 
   environment.addObjectToScene = function (object) {
-    environment.scene.add(object.mesh)
+    if (object.mesh) {
+      environment.scene.add(object.mesh)
+    } else {
+      environment.scene.add(object)
+    }
   }
 
   environment.removeObjectFromScene = function (object) {
